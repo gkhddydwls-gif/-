@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/png" sizes="96x96" href="https://wiki.cobblemon.com/images/b/b1/Pasture_Block_%28block%2C_on%29.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://wiki.cobblemon.com/images/b/b1/Pasture_Block_%28block%2C_on%29.png">
+<title>코블버스 포켓몬 목장 연구소</title>
+<style>
+:root{--bg:#1b1022;--panel:#2a1833;--panel2:#45264e;--line:#704477;--text:#fff0ff;--muted:#d0b4d8;--lime:#e6a7f2;--blue:#f3c4fa;--orange:#ffb6d9}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at 12% 0%,#9c4bb455,transparent 36%),radial-gradient(ellipse at 90% 15%,#6d327a44,transparent 30%)}
+.app{position:relative;max-width:1220px;margin:auto;padding:22px 20px 60px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 0 22px;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:12px;font-weight:850;letter-spacing:-.03em}.brandmark{width:60px;height:60px;flex:0 0 60px;border-radius:16px;background:linear-gradient(145deg,#b66bc9,#633d7a);border:1px solid #e4a4f0;display:grid;place-items:center;object-fit:contain;padding:2px;image-rendering:pixelated}.brand small{display:block;color:var(--muted);font-size:10px;letter-spacing:.15em;margin-top:3px}.version{border:1px solid var(--line);border-radius:999px;padding:8px 12px;color:var(--muted);font-size:12px}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:20px;align-items:center;padding:42px 0 28px}
+.kicker{color:var(--lime);font-size:12px;font-weight:800;letter-spacing:.18em}.hero h1{font-size:clamp(34px,5.5vw,64px);letter-spacing:-.065em;line-height:1.02;margin:14px 0 16px}.hero h1 em{color:var(--lime);font-style:normal}.hero p{color:var(--muted);line-height:1.75;max-width:540px;margin:0}.hero-art{min-height:250px;position:relative;border:1px solid var(--line);border-radius:24px;overflow:hidden;background:linear-gradient(145deg,#60346f,#3b2049 60%,#24152e);display:flex;align-items:center;justify-content:center}
+.hero-art:before{content:"";position:absolute;width:220px;height:220px;border:1px solid #e6a7f244;border-radius:50%;box-shadow:0 0 0 30px #e6a7f20b,0 0 0 60px #e6a7f208}
+.hero-art .bigmon{width:220px;height:220px;object-fit:contain;z-index:1;filter:drop-shadow(0 15px 22px #0008);image-rendering:auto}.art-tag{position:absolute;z-index:2;left:16px;bottom:16px;background:#24152dcc;border:1px solid #8d5a99;border-radius:12px;padding:10px 13px;font-size:12px}.art-tag b{display:block;color:var(--lime);font-size:14px}.art-index{position:absolute;right:17px;top:16px;color:#c4d6e6;font-size:11px;letter-spacing:.15em}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:10px 0 30px}.metric{border:1px solid var(--line);background:#2b1b32;border-radius:15px;padding:15px}.metric strong{display:block;font-size:24px;letter-spacing:-.04em}.metric span{font-size:11px;color:var(--muted)}
+.workspace{display:grid;grid-template-columns:230px 1fr;gap:18px;align-items:start}.sidebar{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:16px;position:sticky;top:14px}.side-title{font-size:11px;color:var(--muted);font-weight:800;letter-spacing:.15em;margin:2px 0 12px}.search{width:100%;border:1px solid var(--line);background:#24152b;border-radius:11px;padding:12px;color:var(--text);font:inherit;outline:none;margin-bottom:20px}.search:focus{border-color:var(--lime)}.type-list{display:grid;gap:5px}.type-btn{display:flex;align-items:center;justify-content:space-between;border:1px solid transparent;background:transparent;color:#bdc9d9;border-radius:9px;padding:10px;text-align:left;font:inherit;font-size:13px;cursor:pointer}.type-btn:hover{background:var(--panel2)}.type-btn.active{background:#512d5e;border-color:#b76dc8;color:var(--lime)}.type-btn span:last-child{font-size:11px;color:var(--muted)}
+.mainhead{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:2px 0 14px}.mainhead h2{font-size:24px;letter-spacing:-.04em;margin:0}.mainhead p{color:var(--muted);font-size:12px;margin:6px 0 0}.sort{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:10px;padding:10px;font:inherit;font-size:12px}
+.filters{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:16px}.chip{font-size:11px;border:1px solid var(--line);background:#2c1a33;color:var(--muted);padding:7px 10px;border-radius:999px;cursor:pointer}.chip.active{color:var(--lime);border-color:#597444;background:#512d5e}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.pokemon{background:linear-gradient(150deg,#382440,#25172d);border:1px solid var(--line);border-radius:16px;padding:13px;min-width:0;transition:transform .16s,border-color .16s}.pokemon:hover{transform:translateY(-2px);border-color:#d28be4}.poke-top{display:flex;gap:10px;align-items:center}.spritebox{width:76px;height:76px;flex:0 0 76px;border-radius:13px;background:radial-gradient(circle,#7b4b88,#3c2447);display:grid;place-items:center;overflow:hidden}.sprite{width:72px;height:72px;object-fit:contain;image-rendering:pixelated}.dex{font-size:10px;color:var(--muted);letter-spacing:.1em}.pname{font-size:15px;font-weight:850;margin:4px 0}.ename{font-size:10px;color:#8294aa}.typepill{display:inline-block;margin-top:5px;border-radius:5px;padding:4px 6px;background:#563261;color:#f4d8fb;font-size:10px}.loot{border-top:1px solid var(--line);margin-top:12px;padding-top:11px}.loot-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px}.loot-head b{font-size:11px;color:var(--lime)}.loot-head span{font-size:10px;color:var(--muted)}.item{display:flex;align-items:center;gap:9px;font-size:13px;line-height:1.45;color:#e4f4ff;padding:8px 10px;border-radius:9px;background:#382043;border:1px solid #694174;margin-top:6px;overflow-wrap:anywhere;min-height:43px}.item-icon{width:28px;height:28px;flex:0 0 28px;object-fit:contain;image-rendering:pixelated;filter:drop-shadow(0 2px 2px #0006)}.item-label{flex:1;min-width:0}.item-emoji{display:inline-grid;place-items:center;font-size:22px;filter:none}.item small{color:var(--orange);margin-left:auto;white-space:nowrap;font-size:11px}.unverified{font-size:11px;line-height:1.5;color:var(--muted);padding:8px;background:#24152b;border-radius:8px}.empty{grid-column:1/-1;border:1px dashed var(--line);border-radius:16px;padding:50px 20px;text-align:center;color:var(--muted)}
+.notice{margin-top:20px;border:1px solid #695b38;background:#242218;border-radius:13px;padding:14px 16px;color:#e9d9ac;font-size:12px;line-height:1.65}.sources{display:flex;flex-wrap:wrap;gap:10px;margin-top:13px}.sources a{font-size:12px;color:var(--blue);text-decoration:none;border-bottom:1px solid #456580;padding-bottom:3px}.footer{display:flex;justify-content:space-between;gap:12px;margin-top:35px;padding-top:18px;border-top:1px solid var(--line);font-size:11px;color:#74849a}
+@media(max-width:980px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.workspace{grid-template-columns:190px 1fr}.hero{grid-template-columns:1fr .75fr}}
+@media(max-width:680px){.app{padding:15px 12px 40px}.hero{grid-template-columns:1fr;padding-top:30px}.hero-art{min-height:190px}.hero-art .bigmon{width:140px;height:140px}.metrics{grid-template-columns:repeat(2,1fr)}.workspace{grid-template-columns:1fr}.sidebar{position:static}.type-list{display:flex;flex-wrap:wrap}.type-btn{padding:8px}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.spritebox{width:78px;height:78px;flex-basis:78px}.sprite{width:88px;height:88px;transform:scale(1.14)}.pokemon{padding:10px}.mainhead{align-items:start;flex-direction:column}.footer{flex-direction:column}}
+@media(max-width:420px){.cards{grid-template-columns:1fr}.poke-top{gap:12px}.spritebox{width:92px;height:92px;flex-basis:92px}.sprite{width:104px;height:104px;transform:scale(1.12)}}
+
+/* FINAL THEME: pure black surfaces with light-lavender outlines */
+:root{--bg:#050507;--panel:#09090d;--panel2:#101015;--line:#c9a7ff;--text:#f8f5ff;--muted:#c9c2d6;--lime:#d9c2ff;--blue:#d9c2ff;--orange:#d9c2ff}
+body{background:#050507!important;color:#f8f5ff}
+body:before{background:none!important}
+.topbar,.sidebar,.metric,.sort,.search,.type-btn,.chip,.pokemon,.item,.unverified,.empty,.notice,.art-tag,.hero-art,.spritebox,.typepill{background:#050507!important;color:#f8f5ff!important;border-color:#c9a7ff!important;box-shadow:none!important}
+.hero-art{background:#050507!important}
+.hero-art:before{border-color:#c9a7ff!important;box-shadow:0 0 0 30px #c9a7ff0a,0 0 0 60px #c9a7ff06!important}
+.brandmark{width:104px!important;height:104px!important;flex:0 0 104px!important;padding:0!important;transform:scale(1.12);border:2px solid #c9a7ff!important;border-radius:18px!important;background:#050507!important;object-fit:contain!important;image-rendering:pixelated}
+.brand{gap:16px!important}
+.brandmark{overflow:visible}
+.type-btn.active,.chip.active{background:#050507!important;color:#d9c2ff!important;border-color:#c9a7ff!important}
+.type-btn:hover,.pokemon:hover{background:#0b0b10!important;border-color:#d9c2ff!important}
+.item{color:#f8f5ff!important}
+.notice{color:#d9c2ff!important}
+.sources a{color:#d9c2ff!important;border-bottom-color:#c9a7ff!important}
+.footer{border-top-color:#c9a7ff!important}
+.hero h1 em,.kicker,.art-tag b,.loot-head b{color:#d9c2ff!important}
+.version{border-color:#c9a7ff!important;color:#d9c2ff!important;background:#050507!important}
+@media(max-width:680px){.brandmark{width:84px!important;height:84px!important;flex-basis:84px!important}}
+
+
+
+/* SOFT DARK LAVENDER THEME: lower contrast, muted borders, no glaring outlines */
+:root{--bg:#121019;--panel:#1a1722;--panel2:#24202f;--line:#554663;--text:#eee9f5;--muted:#aaa0b8;--lime:#c6a9e8;--blue:#c6a9e8;--orange:#d7b6df}
+body{background:#121019!important;color:#eee9f5!important}
+body:before{background:radial-gradient(ellipse at 12% 0%,#6e4d8420,transparent 38%),radial-gradient(ellipse at 90% 15%,#5e426d18,transparent 32%)!important}
+.topbar,.sidebar,.metric,.sort,.search,.type-btn,.chip,.pokemon,.item,.unverified,.empty,.notice,.art-tag,.hero-art,.spritebox,.typepill{background-color:#1a1722!important;color:#eee9f5!important;border-color:#554663!important;box-shadow:none!important}
+.metric,.pokemon{background:#1d1927!important}
+.hero-art{background:linear-gradient(145deg,#292033,#201a2a 65%,#17141e)!important}
+.hero-art:before{border-color:#c6a9e833!important;box-shadow:0 0 0 30px #c6a9e80a,0 0 0 60px #c6a9e805!important}
+.brandmark{background:#282132!important;border:1px solid #78658c!important;border-radius:18px!important}
+.brand{gap:16px!important}
+.version{border-color:#554663!important;color:#c6a9e8!important;background:#1a1722!important}
+.search{background:#17141e!important}
+.search:focus{border-color:#a98acb!important}
+.type-btn{color:#c9c0d5!important}
+.type-btn.active,.chip.active{background:#30263b!important;color:#ddc9f4!important;border-color:#806a98!important}
+.type-btn:hover,.pokemon:hover{background:#26202f!important;border-color:#806a98!important}
+.chip{background:#201b2a!important;color:#bcb1cb!important}
+.spritebox{background:radial-gradient(circle,#40334d,#211b2b)!important}
+.typepill{background:#30263b!important;color:#ddc9f4!important;border-color:#51415f!important}
+.item{background:#211b2b!important;border-color:#403449!important;color:#eee9f5!important}
+.item small{color:#d7b6df!important}
+.unverified{background:#1a1722!important;color:#aaa0b8!important}
+.notice{background:#211e25!important;border-color:#5b5063!important;color:#d8cbdc!important}
+.sources a{color:#c6a9e8!important;border-bottom-color:#554663!important}
+.footer{border-top-color:#403449!important;color:#9389a2!important}
+.hero h1 em,.kicker,.art-tag b,.loot-head b{color:#c6a9e8!important}
+.art-tag{background:#1a1722dd!important;border-color:#554663!important}
+.dex,.ename{color:#aaa0b8!important}
+@media(max-width:680px){.brandmark{width:84px!important;height:84px!important;flex-basis:84px!important}}
+
+
+/* Final theme: dark navy with calm blue borders */
+:root{--bg:#0b1220;--panel:#111c2d;--panel2:#182840;--line:#315b88;--text:#eaf3ff;--muted:#9eb4d0;--lime:#79baff;--blue:#8bc8ff;--orange:#c7ddff}
+body{background:var(--bg)!important;color:var(--text)!important}
+body:before{background:radial-gradient(ellipse at 12% 0%,#183b6550,transparent 36%),radial-gradient(ellipse at 90% 15%,#18355a40,transparent 30%)!important}
+.topbar,.sidebar,.metric,.sort,.search,.type-btn,.chip,.pokemon,.item,.unverified,.empty,.notice,.art-tag,.hero-art,.spritebox,.typepill{color:var(--text)!important;border-color:var(--line)!important;box-shadow:none!important}
+.topbar,.sidebar,.metric,.sort,.search,.type-btn,.chip,.pokemon,.item,.unverified,.empty,.notice,.art-tag,.spritebox,.typepill{background-color:var(--panel)!important}
+.pokemon{background:linear-gradient(150deg,#17253a,#101a2a)!important}
+.item{background:#142238!important;color:#eaf3ff!important}
+.unverified{background:#101a2a!important}
+.hero-art{background:linear-gradient(145deg,#1b3554,#12243a 65%,#0d192a)!important}
+.hero-art:before{border-color:#79baff38!important;box-shadow:0 0 0 30px #79baff0a,0 0 0 60px #79baff06!important}
+.brandmark{width:104px!important;height:104px!important;flex:0 0 104px!important;object-fit:contain!important;padding:5px!important;background:#111c2d!important;border:2px solid #4c8ed1!important;border-radius:18px!important;image-rendering:auto!important}
+.brandmark{overflow:visible}
+.kicker,.hero h1 em,.loot-head b{color:var(--lime)!important}
+.typepill{background:#1a2d47!important;color:#b9dcff!important}
+.type-btn.active{background:#1a3554!important;border-color:#5b9ce0!important;color:#9fd0ff!important}
+.chip.active{background:#1a3554!important;border-color:#5b9ce0!important;color:#9fd0ff!important}
+.pokemon:hover{border-color:#6aa9eb!important}
+.item small{color:#a9d0ff!important}
+.search:focus{border-color:#79baff!important}
+.spritebox{background:radial-gradient(circle,#243e5e,#142238)!important}
+.art-tag{background:#101c2cdd!important;border-color:#315b88!important}
+.art-tag b{color:#79baff!important}
+@media(max-width:680px){.brandmark{width:84px!important;height:84px!important;flex-basis:84px!important}}
+
+
+/* Type-specific outlines: single types use one color; dual types split diagonally */
+.pokemon{border:3px solid transparent!important;background:linear-gradient(150deg,#17253a,#101a2a) padding-box,linear-gradient(to bottom right,var(--pokemon-type-border,#315b88) 0 49%,var(--pokemon-type-border-2,var(--pokemon-type-border,#315b88)) 51% 100%) border-box!important}
+.pokemon:hover{border-color:transparent!important}
+
+</style>
+</head>
+<body>
+<div class="app">
+<header class="topbar">
+  <div class="brand"><img class="brandmark" src="https://wiki.cobblemon.com/images/b/b1/Pasture_Block_%28block%2C_on%29.png" alt="코블몬 목장 블록 아이콘"><div>PASTURE LAB<small>COBBLEVERSE FIELD DATABASE</small></div></div>
+  <div class="version">GEN I / 001–151</div>
+</header>
+<section class="hero">
+  <div><div class="kicker">목장 연구소 / 데이터베이스</div><h1>포켓몬을 찾고,<br><em>드랍을 확인해.</em></h1><p>코블버스 플레이를 위한 1세대 포켓몬 목장 도감. 사진으로 포켓몬을 찾고, 타입과 아이템 이름으로 필요한 정보를 빠르게 필터링하세요.</p></div>
+  <div class="hero-art"><span class="art-index">SPECIMEN 025</span><img class="bigmon" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/25.png" alt="피카츄" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png'"><div class="art-tag"><b>FIELD SPECIMEN</b>피카츄 · 전기 타입</div></div>
+</section>
+<section class="metrics">
+  <div class="metric"><strong>151</strong><span>1세대 포켓몬</span></div>
+  <div class="metric"><strong id="visibleCount">151</strong><span>현재 표시 중</span></div>
+  <div class="metric"><strong id="lootCount">151</strong><span>드랍 정보 등록</span></div>
+  <div class="metric"><strong>CF+Mod</strong><span>참고 데이터 버전</span></div>
+</section>
+<section class="workspace">
+  <aside class="sidebar">
+    <div class="side-title">검색 / SEARCH</div>
+    <input id="search" class="search" placeholder="포켓몬 또는 아이템..." aria-label="포켓몬 또는 아이템 검색">
+    <div class="side-title">타입 / TYPE</div>
+    <div class="type-list" id="typeList"></div>
+  </aside>
+  <section>
+    <div class="mainhead"><div><h2>포켓몬 도감</h2><p id="subline">1세대 전체 · 도감 번호순</p></div><select class="sort" id="sort" aria-label="정렬"><option value="dex">도감 번호순</option><option value="name">이름순</option></select></div>
+    <div class="filters"><button class="chip active" data-status="all">전체</button><button class="chip" data-status="known">확률 드랍 포함</button></div>
+    <div id="cards" class="cards"></div>
+  </section>
+</section>
+<div class="notice"><b>데이터 정확도 안내</b><br>Pocketcraft의 Cobblemon 드랍표와 Cobblemon 위키의 아이템별 표를 참고해 1세대 151마리의 드랍 정보를 정리했습니다. 아이템명은 한국어 게임 용어에 맞춰 표시했습니다. Cobbleverse의 모드 버전·서버 설정이나 목장블럭의 별도 처리 방식에 따라 실제 결과가 다를 수 있으므로 참고용으로 이용해 주세요.</div>
+
+<footer class="footer"><span>PASTURE LAB · FAN-MADE DATABASE</span><span>Pokémon / Cobblemon 관련 권리는 각 권리자에게 있습니다.</span></footer>
+</div>
+<script>
+const names = [
+["이상해씨","Bulbasaur","풀 / 독"],["이상해풀","Ivysaur","풀 / 독"],["이상해꽃","Venusaur","풀 / 독"],["파이리","Charmander","불꽃"],["리자드","Charmeleon","불꽃"],["리자몽","Charizard","불꽃 / 비행"],["꼬부기","Squirtle","물"],["어니부기","Wartortle","물"],["거북왕","Blastoise","물"],["캐터피","Caterpie","벌레"],["단데기","Metapod","벌레"],["버터플","Butterfree","벌레 / 비행"],["뿔충이","Weedle","벌레 / 독"],["딱충이","Kakuna","벌레 / 독"],["독침붕","Beedrill","벌레 / 독"],["구구","Pidgey","노말 / 비행"],["피죤","Pidgeotto","노말 / 비행"],["피죤투","Pidgeot","노말 / 비행"],["꼬렛","Rattata","노말"],["레트라","Raticate","노말"],["깨비참","Spearow","노말 / 비행"],["깨비드릴조","Fearow","노말 / 비행"],["아보","Ekans","독"],["아보크","Arbok","독"],["피카츄","Pikachu","전기"],["라이츄","Raichu","전기"],["모래두지","Sandshrew","땅"],["고지","Sandslash","땅"],["니드런♀","Nidoran♀","독"],["니드리나","Nidorina","독"],["니드퀸","Nidoqueen","독 / 땅"],["니드런♂","Nidoran♂","독"],["니드리노","Nidorino","독"],["니드킹","Nidoking","독 / 땅"],["삐삐","Clefairy","페어리"],["픽시","Clefable","페어리"],["식스테일","Vulpix","불꽃"],["나인테일","Ninetales","불꽃"],["푸린","Jigglypuff","노말 / 페어리"],["푸크린","Wigglytuff","노말 / 페어리"],["주뱃","Zubat","독 / 비행"],["골뱃","Golbat","독 / 비행"],["뚜벅쵸","Oddish","풀 / 독"],["냄새꼬","Gloom","풀 / 독"],["라플레시아","Vileplume","풀 / 독"],["파라스","Paras","벌레 / 풀"],["파라섹트","Parasect","벌레 / 풀"],["콘팡","Venonat","벌레 / 독"],["도나리","Venomoth","벌레 / 독"],["디그다","Diglett","땅"],["닥트리오","Dugtrio","땅"],["나옹","Meowth","노말"],["페르시온","Persian","노말"],["고라파덕","Psyduck","물"],["골덕","Golduck","물"],["망키","Mankey","격투"],["성원숭","Primeape","격투"],["가디","Growlithe","불꽃"],["윈디","Arcanine","불꽃"],["발챙이","Poliwag","물"],["슈륙챙이","Poliwhirl","물"],["강챙이","Poliwrath","물 / 격투"],["캐이시","Abra","에스퍼"],["윤겔라","Kadabra","에스퍼"],["후딘","Alakazam","에스퍼"],["알통몬","Machop","격투"],["근육몬","Machoke","격투"],["괴력몬","Machamp","격투"],["모다피","Bellsprout","풀 / 독"],["우츠동","Weepinbell","풀 / 독"],["우츠보트","Victreebel","풀 / 독"],["왕눈해","Tentacool","물 / 독"],["독파리","Tentacruel","물 / 독"],["꼬마돌","Geodude","바위 / 땅"],["데구리","Graveler","바위 / 땅"],["딱구리","Golem","바위 / 땅"],["포니타","Ponyta","불꽃"],["날쌩마","Rapidash","불꽃"],["야돈","Slowpoke","물 / 에스퍼"],["야도란","Slowbro","물 / 에스퍼"],["코일","Magnemite","전기 / 강철"],["레어코일","Magneton","전기 / 강철"],["파오리","Farfetch’d","노말 / 비행"],["두두","Doduo","노말 / 비행"],["두트리오","Dodrio","노말 / 비행"],["쥬쥬","Seel","물"],["쥬레곤","Dewgong","물 / 얼음"],["질퍽이","Grimer","독"],["질뻐기","Muk","독"],["셀러","Shellder","물"],["파르셀","Cloyster","물 / 얼음"],["고오스","Gastly","고스트 / 독"],["고우스트","Haunter","고스트 / 독"],["팬텀","Gengar","고스트 / 독"],["롱스톤","Onix","바위 / 땅"],["슬리프","Drowzee","에스퍼"],["슬리퍼","Hypno","에스퍼"],["크랩","Krabby","물"],["킹크랩","Kingler","물"],["찌리리공","Voltorb","전기"],["붐볼","Electrode","전기"],["아라리","Exeggcute","풀 / 에스퍼"],["나시","Exeggutor","풀 / 에스퍼"],["탕구리","Cubone","땅"],["텅구리","Marowak","땅"],["시라소몬","Hitmonlee","격투"],["홍수몬","Hitmonchan","격투"],["내루미","Lickitung","노말"],["또가스","Koffing","독"],["또도가스","Weezing","독"],["뿔카노","Rhyhorn","땅 / 바위"],["코뿌리","Rhydon","땅 / 바위"],["럭키","Chansey","노말"],["덩쿠리","Tangela","풀"],["캥카","Kangaskhan","노말"],["쏘드라","Horsea","물"],["시드라","Seadra","물"],["콘치","Goldeen","물"],["왕콘치","Seaking","물"],["별가사리","Staryu","물"],["아쿠스타","Starmie","물 / 에스퍼"],["마임맨","Mr. Mime","에스퍼 / 페어리"],["스라크","Scyther","벌레 / 비행"],["루주라","Jynx","얼음 / 에스퍼"],["에레브","Electabuzz","전기"],["마그마","Magmar","불꽃"],["쁘사이저","Pinsir","벌레"],["켄타로스","Tauros","노말"],["잉어킹","Magikarp","물"],["갸라도스","Gyarados","물 / 비행"],["라프라스","Lapras","물 / 얼음"],["메타몽","Ditto","노말"],["이브이","Eevee","노말"],["샤미드","Vaporeon","물"],["쥬피썬더","Jolteon","전기"],["부스터","Flareon","불꽃"],["폴리곤","Porygon","노말"],["암나이트","Omanyte","바위 / 물"],["암스타","Omastar","바위 / 물"],["투구","Kabuto","바위 / 물"],["투구푸스","Kabutops","바위 / 물"],["프테라","Aerodactyl","바위 / 비행"],["잠만보","Snorlax","노말"],["프리져","Articuno","얼음 / 비행"],["썬더","Zapdos","전기 / 비행"],["파이어","Moltres","불꽃 / 비행"],["미뇽","Dratini","드래곤"],["신뇽","Dragonair","드래곤"],["망나뇽","Dragonite","드래곤 / 비행"],["뮤츠","Mewtwo","에스퍼"],["뮤","Mew","에스퍼"]];
+const drops = {"1":["수박 씨앗 · 0–1개","기적의씨 · 5%"],"2":["수박 씨앗 · 0–2개","기적의씨 · 10%"],"3":["수박 씨앗 · 0–3개","기적의씨 · 25%"],"4":["블레이즈 가루 · 0–1개","숯 막대 · 5%"],"5":["블레이즈 가루 · 0–2개","숯 막대 · 10%"],"6":["블레이즈 가루 · 0–3개","숯 막대 · 25%"],"7":["거북 등딱지 · 0–1개","신비의물방울 · 5%"],"8":["거북 등딱지 · 0–2개","신비의물방울 · 10%"],"9":["거북 등딱지 · 0–3개","신비의물방울 · 25%"],"10":["실 · 0–1개","시마열매 · 2.5%"],"11":["실 · 0–2개","시마열매 · 2.5%"],"12":["은빛가루 · 5%","탈피껍질 · 5%","시마열매 · 5%"],"13":["실 · 0–1개","파인열매 · 2.5%"],"14":["실 · 0–2개","파인열매 · 2.5%"],"15":["독바늘 · 5%","탈피껍질 · 5%","파인열매 · 5%"],"16":["깃털 · 0–1개","생닭고기 · 1개","카리열매 · 2.5%"],"17":["깃털 · 0–2개","생닭고기 · 1개","예리한부리 · 2.5%","카리열매 · 5%"],"18":["깃털 · 0–3개","생닭고기 · 1개","예리한부리 · 5%","카리열매 · 10%"],"19":["썩은 살점 · 0–1개","카리열매 · 2.5%"],"20":["썩은 살점 · 0–2개","카리열매 · 5%"],"21":["깃털 · 0–1개","생닭고기 · 1개","예리한부리 · 2.5%","바코열매 · 2.5%"],"22":["깃털 · 0–2개","생닭고기 · 1개","예리한부리 · 5%","바코열매 · 5%"],"23":["예리한이빨 · 2.5%"],"24":["예리한이빨 · 5%"],"25":["전기구슬 · 5%","천둥의돌 · 5%","오랭열매 · 5%"],"26":["전기구슬 · 10%","천둥의돌 · 10%","오랭열매 · 10%"],"27":["아르마딜로 인갑 · 0–1개","그립클로 · 2.5%","선제공격손톱 · 2.5%","부드러운모래 · 2.5%"],"28":["아르마딜로 인갑 · 0–2개","그립클로 · 5%","선제공격손톱 · 5%","부드러운모래 · 5%"],"29":["복슝열매 · 2.5%","독바늘 · 2.5%"],"30":["복슝열매 · 5%","독바늘 · 5%"],"31":["복슝열매 · 10%","독바늘 · 10%"],"32":["복슝열매 · 2.5%","독바늘 · 2.5%"],"33":["복슝열매 · 5%","독바늘 · 5%"],"34":["복슝열매 · 10%","독바늘 · 10%"],"35":["바리비열매 · 5%","요정의깃털 · 5%","달의돌 · 5%"],"36":["바리비열매 · 10%","요정의깃털 · 10%","달의돌 · 10%"],"37":["숯 · 2.5%","복분열매 · 2.5%","달콤한 열매 · 1–3개"],"38":["숯 · 5%","복분열매 · 5%","달콤한 열매 · 2–4개"],"39":["에어벌룬 · 5%","달의돌 · 5%","오랭열매 · 5%"],"40":["에어벌룬 · 10%","달의돌 · 10%","오랭열매 · 10%"],"41":["팬텀막 · 2.5%","시몬열매 · 2.5%"],"42":["팬텀막 · 5%","시몬열매 · 5%"],"43":["흡수전구 · 2.5%","기적의씨 · 2.5%"],"44":["흡수전구 · 5%","기적의씨 · 5%"],"45":["흡수전구 · 10%","기적의씨 · 10%"],"46":["꼬시개열매 · 2.5%","버섯 · 0–1개"],"47":["꼬시개열매 · 5%","버섯 · 0–2개"],"48":["시몬열매 · 2.5%","은빛가루 · 2.5%"],"49":["시몬열매 · 5%","은빛가루 · 5%"],"50":["흙 · 0–1개","감자 · 2.5%","부드러운모래 · 2.5%"],"51":["흙 · 0–2개","감자 · 5%","부드러운모래 · 5%"],"52":["금 조각 · 0–1개","블루열매 · 2.5%"],"53":["금 조각 · 0–2개","블루열매 · 5%"],"54":["깃털 · 0–1개","생닭고기 · 1개","신비의물방울 · 2.5%"],"55":["깃털 · 0–2개","생닭고기 · 1개","신비의물방울 · 5%"],"56":["근육밴드 · 2.5%","파야열매 · 2.5%"],"57":["근육밴드 · 5%","파야열매 · 5%"],"58":["뼈 · 0–1개","복분열매 · 2.5%","숯 · 2.5%"],"59":["뼈 · 0–2개","복분열매 · 5%","숯 · 5%"],"60":["왕의징표석 · 2.5%","신비의물방울 · 2.5%"],"61":["왕의징표석 · 5%","신비의물방울 · 5%"],"62":["왕의징표석 · 10%","신비의물방울 · 10%"],"63":["엔더 진주 · 0–1개","뒤틀린숟가락 · 2.5%"],"64":["엔더 진주 · 0–2개","뒤틀린숟가락 · 5%"],"65":["엔더 진주 · 0–3개","뒤틀린숟가락 · 10%"],"66":["기합의머리띠 · 2.5%","시마열매 · 2.5%"],"67":["기합의머리띠 · 5%","시마열매 · 5%"],"68":["기합의머리띠 · 10%","시마열매 · 10%"],"69":["흡수전구 · 2.5%","기적의씨 · 2.5%"],"70":["흡수전구 · 5%","기적의씨 · 5%"],"71":["흡수전구 · 10%","기적의씨 · 10%"],"72":["먹물 주머니 · 1–3개","발광 먹물 주머니 · 10%"],"73":["먹물 주머니 · 2–4개","발광 먹물 주머니 · 10%"],"74":["자갈 · 0–1개","린드열매 · 2.5%","진화의휘석 · 2.5%"],"75":["자갈 · 0–2개","린드열매 · 5%","진화의휘석 · 5%"],"76":["자갈 · 0–3개","린드열매 · 10%","진화의휘석 · 10%"],"77":["가죽 · 0–1개","부싯돌 가루 · 2.5%","슈캐열매 · 2.5%"],"78":["가죽 · 0–2개","부싯돌 가루 · 2.5%","슈캐열매 · 5%"],"79":["왕의징표석 · 2.5%","오랭열매 · 2.5%"],"80":["왕의징표석 · 5%","오랭열매 · 5%"],"81":["철 조각 · 0–1개","자석 · 2.5%","금속코트 · 2.5%","슈캐열매 · 2.5%"],"82":["철 조각 · 0–2개","자석 · 5%","금속코트 · 5%","슈캐열매 · 5%"],"83":["깃털 · 0–1개","약용 부추 · 0–1개","생닭고기 · 1개"],"84":["깃털 · 0–1개","생닭고기 · 1개","예리한부리 · 2.5%","위키열매 · 2.5%"],"85":["깃털 · 0–2개","생닭고기 · 1개","예리한부리 · 5%","위키열매 · 5%"],"86":["배리열매 · 2.5%","얼지않는얼음 · 2.5%","생대구 · 0–1개"],"87":["배리열매 · 5%","얼지않는얼음 · 5%","생대구 · 0–2개"],"88":["슬라임볼 · 0–1개","검은진흙 · 2.5%","맹독구슬 · 2.5%"],"89":["슬라임볼 · 0–2개","검은진흙 · 5%","맹독구슬 · 5%"],"90":["껍질방울 · 2.5%","배리열매 · 2.5%"],"91":["껍질방울 · 5%","배리열매 · 5%"],"92":["가스트 눈물 · 5%","파야열매 · 2.5%","뒤틀린숟가락 · 2.5%"],"93":["가스트 눈물 · 10%","파야열매 · 5%","뒤틀린숟가락 · 5%"],"94":["가스트 눈물 · 25%","파야열매 · 10%","뒤틀린숟가락 · 10%"],"95":["철 원석 · 2–4개","파쇼열매 · 2.5%","진화의휘석 · 2.5%"],"96":["뒤틀린숟가락 · 2.5%","오랭열매 · 2.5%"],"97":["뒤틀린숟가락 · 5%","오랭열매 · 5%"],"98":["생대구 · 0–1개","왕의징표석 · 2.5%","위키열매 · 2.5%"],"99":["생대구 · 0–2개","왕의징표석 · 5%","위키열매 · 5%"],"100":["화약 · 0–1개","버치열매 · 2.5%"],"101":["화약 · 0–2개","버치열매 · 5%"],"102":["달걀 · 0–3개","타간열매 · 2.5%","타원돌 · 2.5%"],"103":["달걀 · 0–3개","타간열매 · 5%","타원돌 · 5%"],"104":["뼈 · 0–1개","나나열매 · 2.5%"],"105":["뼈 · 1개","나나열매 · 5%"],"106":["검은띠 · 2.5%","기합의머리띠 · 2.5%"],"107":["검은띠 · 2.5%","기합의머리띠 · 2.5%"],"108":["슬라임볼 · 0–1개","오랭열매 · 2.5%"],"109":["슬라임볼 · 0–1개","검은진흙 · 2.5%","맹독구슬 · 2.5%"],"110":["슬라임볼 · 0–2개","검은진흙 · 5%","맹독구슬 · 5%"],"111":["뼈 · 0–1개","파쇼열매 · 2.5%"],"112":["뼈 · 0–2개","파쇼열매 · 5%","프로텍터 · 5%"],"113":["달걀 · 50%","행운의알 · 10%","타원돌 · 10%"],"114":["큰뿌리 · 2.5%","덩굴 · 0–1개"],"115":["칠란열매 · 5%"],"116":["용의비늘 · 2.5%","먹물 주머니 · 0–1개","프리즈머린 조각 · 0–1개"],"117":["용의비늘 · 5%","먹물 주머니 · 0–2개","프리즈머린 조각 · 0–2개"],"118":["뼛가루 · 5%","신비의물방울 · 2.5%","생연어 · 1개","위키열매 · 2.5%"],"119":["뼛가루 · 10%","신비의물방울 · 5%","생연어 · 1개","위키열매 · 5%"],"120":["별의모래 · 0–1개","물의돌 · 2.5%"],"121":["별의모래 · 0–2개","물의돌 · 5%"],"122":["빛의점토 · 5%","바리비열매 · 5%"],"123":["시마열매 · 2.5%","금속코트 · 2.5%","탈피껍질 · 2.5%"],"124":["배리열매 · 5%","얼지않는얼음 · 5%"],"125":["에레키부스터 · 5%","버치열매 · 5%","자석 · 2.5%"],"126":["마그마부스터 · 5%","복분열매 · 5%","숯 · 5%"],"127":["꼬시개열매 · 5%","그립클로 · 5%"],"128":["가죽 · 0–2개","생소고기 · 1–3개","칠란열매 · 5%"],"129":["뼛가루 · 5%","위키열매 · 2.5%"],"130":["뼛가루 · 10%","위키열매 · 5%"],"131":["바다의심장 · 5%","신비의물방울 · 5%","얼지않는얼음 · 5%"],"132":["빠른가루 · 0–1개","금속가루 · 5%"],"133":["실크스카프 · 5%","진화의휘석 · 5%"],"134":["물의돌 · 25%","신비의물방울 · 10%"],"135":["천둥의돌 · 25%","자석 · 10%"],"136":["숯 막대 · 10%","복분열매 · 10%"],"137":["업그레이드 · 2.5%","전기구슬 · 2.5%"],"138":["앵무조개 껍데기 · 1개","뼛가루 · 5%"],"139":["앵무조개 껍데기 · 1개","뼛가루 · 10%"],"140":["예리한손톱 · 5%","뼛가루 · 5%"],"141":["예리한손톱 · 10%","뼛가루 · 10%"],"142":["뼈 · 0–3개","울퉁불퉁멧 · 10%"],"143":["사과 · 0–3개","먹다남은음식 · 5%"],"144":["배리열매 · 5%","얼지않는얼음 · 5%","신비의깃털 · 5%"],"145":["버치열매 · 5%","자석 · 5%","신비의깃털 · 5%"],"146":["복분열매 · 5%","숯 · 5%","신비의깃털 · 5%"],"147":["용의숨결 · 0–1개","용의비늘 · 2.5%","하반열매 · 2.5%"],"148":["용의숨결 · 0–2개","용의비늘 · 5%","하반열매 · 5%"],"149":["용의숨결 · 0–3개","용의비늘 · 10%","하반열매 · 10%"],"150":["뒤틀린숟가락 · 10%","신비의깃털 · 10%"],"151":["신비의깃털 · 5%","기적의씨 · 5%"]};
+const typeList=document.getElementById('typeList'), cards=document.getElementById('cards'), search=document.getElementById('search'), sort=document.getElementById('sort');
+let selectedType='', status='all';
+const types=['전체','노말','불꽃','물','전기','풀','얼음','격투','독','땅','비행','에스퍼','벌레','바위','고스트','드래곤','강철','페어리'];
+types.forEach(t=>{const b=document.createElement('button');b.className='type-btn'+(t==='전체'?' active':'');b.innerHTML=`<span>${t==='전체'?'✧': '◦'} ${t}</span><span>${t==='전체'?'151':''}</span>`;b.onclick=()=>{selectedType=t==='전체'?'':t;typeList.querySelectorAll('button').forEach(x=>x.classList.toggle('active',x===b));render()};typeList.appendChild(b)});
+document.querySelectorAll('[data-status]').forEach(b=>b.onclick=()=>{status=b.dataset.status;document.querySelectorAll('[data-status]').forEach(x=>x.classList.toggle('active',x===b));render()});
+
+// Pocketcraft 드랍표의 아이콘 구성을 참고해, 마인크래프트 재료와 포켓몬 도구를 각각 알맞은 아이콘 소스에 연결.
+const vanillaIcons = {
+  "실":"string","생닭고기":"chicken","깃털":"feather","썩은 살점":"rotten_flesh","뼈":"bone",
+  "흙":"dirt","감자":"potato","금 조각":"gold_nugget","철 조각":"iron_nugget","화약":"gunpowder",
+  "달걀":"egg","먹물 주머니":"ink_sac","발광 먹물 주머니":"glow_ink_sac","슬라임볼":"slime_ball",
+  "자갈":"gravel","가죽":"leather","버섯":"red_mushroom","덩굴":"vine","사과":"apple",
+  "생대구":"cod","생연어":"salmon","생소고기":"beef","프리즈머린 조각":"prismarine_shard",
+  "앵무조개 껍데기":"nautilus_shell","철 원석":"raw_iron","수박 씨앗":"melon_seeds",
+  "달콤한 열매":"sweet_berries","숯":"charcoal","뼛가루":"bone_meal","가스트 눈물":"ghast_tear",
+  "부싯돌 가루":"flint","거북 등딱지":"turtle_scute","아르마딜로 인갑":"armadillo_scute",
+  "블레이즈 가루":"blaze_powder","엔더 진주":"ender_pearl","바다의심장":"heart_of_the_sea",
+  "숯 막대":"charcoal","약용 부추":"leek","별의모래":"glowstone_dust",
+  "나무 막대":"stick","밀":"wheat","당근":"carrot","빨간 버섯":"red_mushroom",
+  "갈색 버섯":"brown_mushroom","종이":"paper","유리병":"glass_bottle","실":"string",
+  "철 주괴":"iron_ingot","금 주괴":"gold_ingot","다이아몬드":"diamond","석탄":"coal",
+  "발광석 가루":"glowstone_dust","프리즈머린 수정":"prismarine_crystals",
+  "슬라임볼":"slime_ball","덩굴":"vine","사탕무 씨앗":"beetroot_seeds",
+  "수련잎":"lily_pad","눈덩이":"snowball","점토":"clay_ball","종":"bell",
+  "토끼 가죽":"rabbit_hide","토끼발":"rabbit_foot","거미 눈":"spider_eye",
+  "마그마 크림":"magma_cream","블레이즈 막대":"blaze_rod","엔더의 눈":"ender_eye",
+  "프리즈머린 조각":"prismarine_shard","프리즈머린 수정":"prismarine_crystals",
+  "달콤한 열매":"sweet_berries","생연어":"salmon","생대구":"cod","생소고기":"beef",
+  "생돼지고기":"porkchop","구운 대구":"cooked_cod","구운 연어":"cooked_salmon",
+  "구운 소고기":"cooked_beef","구운 닭고기":"cooked_chicken",
+  "금 조각":"gold_nugget","철 조각":"iron_nugget","앵무조개 껍데기":"nautilus_shell"
+};
+const pokemonIconSlugs = {
+  "기적의씨":"miracle-seed","신비의물방울":"mystic-water","예리한부리":"sharp-beak",
+  "은빛가루":"silver-powder","독바늘":"poison-barb","탈피껍질":"shed-shell",
+  "전기구슬":"light-ball","천둥의돌":"thunder-stone","물의돌":"water-stone","달의돌":"moon-stone",
+  "에어벌룬":"air-balloon","그립클로":"grip-claw","선제공격손톱":"quick-claw",
+  "부드러운모래":"soft-sand","진화의휘석":"eviolite","왕의징표석":"kings-rock",
+  "자석":"magnet","금속코트":"metal-coat","뒤틀린숟가락":"twisted-spoon",
+  "기합의머리띠":"focus-band","근육밴드":"muscle-band","검은띠":"black-belt",
+  "맹독구슬":"toxic-orb","검은진흙":"black-sludge","껍질방울":"shell-bell",
+  "행운의알":"lucky-egg","타원돌":"oval-stone","큰뿌리":"big-root","먹다남은음식":"leftovers",
+  "업그레이드":"up-grade","프로텍터":"protector","용의비늘":"dragon-scale","에레키부스터":"electirizer",
+  "마그마부스터":"magmarizer","예리한손톱":"razor-claw","울퉁불퉁멧":"rocky-helmet",
+  "신비의깃털":"rainbow-wing","빠른가루":"quick-powder","금속가루":"metal-powder",
+  "실크스카프":"silk-scarf","얼지않는얼음":"never-melt-ice","빛의점토":"light-clay",
+  "흡수전구":"absorb-bulb","팬텀막":"spell-tag","용의숨결":"dragon-fang",
+  "바다의심장":"heart-of-the-sea","숯 막대":"charcoal-stick","요정의깃털":"pixie-plate",
+  "예리한이빨":"razor-fang","복슝열매":"pecha-berry","시마열매":"oran-berry",
+  "파인열매":"pinap-berry","카리열매":"chilan-berry","바코열매":"charti-berry",
+  "오랭열매":"oran-berry","아르마딜로 인갑":"armadillo-scute","복분열매":"rawst-berry",
+  "시몬열매":"persim-berry","바리비열매":"babiri-berry","복분열매":"rawst-berry",
+  "팬텀막":"spell-tag","흡수전구":"absorb-bulb","꼬시개열매":"coba-berry",
+  "버치열매":"cheri-berry","타간열매":"oran-berry","나나열매":"nanab-berry",
+  "위키열매":"wiki-berry","린드열매":"rindo-berry","슈캐열매":"shuca-berry",
+  "위키열매":"wiki-berry","배리열매":"aspear-berry","파야열매":"payapa-berry",
+  "파쇼열매":"passho-berry","타원돌":"oval-stone","칠란열매":"chilan-berry",
+  "시마열매":"oran-berry","바코열매":"charti-berry","하반열매":"haban-berry",
+  "꼬시개열매":"coba-berry","블루열매":"bluk-berry","버치열매":"cheri-berry",
+  "린드열매":"rindo-berry","슈캐열매":"shuca-berry","파야열매":"payapa-berry",
+  "바다의심장":"heart-of-the-sea","기적의씨":"miracle-seed","숯":"charcoal",
+  "달콤한 열매":"sweet-berries","부싯돌 가루":"flint","요정의깃털":"pixie-plate",
+  "금속코트":"metal-coat","진화의휘석":"eviolite","신비의깃털":"rainbow-wing",
+  "천둥의돌":"thunder-stone","업그레이드":"up-grade","앵무조개 껍데기":"nautilus-shell",
+  "뼈":"bone","생소고기":"beef","생닭고기":"chicken","깃털":"feather",
+  "철 조각":"iron-nugget","금 조각":"gold-nugget","수박 씨앗":"melon-seeds",
+  "별의모래":"stardust","블레이즈 가루":"blaze-powder","엔더 진주":"pearl",
+  "약용 부추":"leek","바리비열매":"babiri-berry","바리비열매":"babiri-berry",
+  "칠란열매":"chilan-berry","배리열매":"aspear-berry","시몬열매":"persim-berry",
+  "하반열매":"haban-berry","타간열매":"oran-berry","나나열매":"nanab-berry",
+  "위키열매":"wiki-berry","복분열매":"rawst-berry","블루열매":"bluk-berry",
+  "파인열매":"pinap-berry","카리열매":"chilan-berry","시마열매":"oran-berry",
+  "꼬시개열매":"coba-berry","린드열매":"rindo-berry","슈캐열매":"shuca-berry",
+  "파쇼열매":"passho-berry","파야열매":"payapa-berry","버치열매":"cheri-berry",
+  "오랭열매":"oran-berry","복슝열매":"pecha-berry","바코열매":"charti-berry"
+};
+const itemEmoji = {
+  "숯 막대":"🪵","블레이즈 가루":"✨","엔더 진주":"🟢","별의모래":"✨",
+  "수박 씨앗":"🌱","달콤한 열매":"🍒","버섯":"🍄","약용 부추":"🌿","거북 등딱지":"🐢",
+  "요정의깃털":"🪶","부싯돌 가루":"🪨","아르마딜로 인갑":"🛡️"
+};
+function iconCandidates(itemText){
+  const base = itemText.split(" · ")[0].trim();
+  const urls = [];
+  if(vanillaIcons[base]) {
+    const vanillaId = vanillaIcons[base];
+    urls.push(`https://mcasset.cloud/1.21.1/assets/minecraft/textures/item/${vanillaId}.png`);
+    urls.push(`https://raw.githubusercontent.com/InventivetalentDev/minecraft-assets/1.21.1/assets/minecraft/textures/item/${vanillaId}.png`);
+  }
+  const slug = pokemonIconSlugs[base];
+  if(slug && !vanillaIcons[base]) {
+    urls.push(`https://play.pokemonshowdown.com/sprites/itemicons/${slug}.png`);
+    urls.push(`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${slug}.png`);
+  }
+  if(!urls.length && /열매/.test(base)) {
+    urls.push("https://play.pokemonshowdown.com/sprites/itemicons/oran-berry.png");
+  }
+  return {urls, emoji:itemEmoji[base] || (slug ? "✨" : "📦")};
+}
+function itemMarkup(itemText){
+  const icon = iconCandidates(itemText);
+  const split = itemText.split(" · ");
+  const label = split[0] || itemText;
+  const detail = split.slice(1).join(" · ");
+  const attrs = icon.urls.map(u => encodeURI(u)).join("|");
+  const iconHtml = icon.urls.length
+    ? `<img class="item-icon" src="${icon.urls[0]}" data-fallbacks="${attrs}" data-idx="0" alt="" loading="lazy" onerror="const a=(this.dataset.fallbacks||'').split('|');const n=Number(this.dataset.idx||0)+1;if(n<a.length){this.dataset.idx=n;this.src=a[n]}else{this.outerHTML='<span class=&quot;item-icon item-emoji&quot; aria-hidden=&quot;true&quot;>${icon.emoji}</span>'}">`
+    : `<span class="item-icon item-emoji" aria-hidden="true">${icon.emoji}</span>`;
+  return `<div class="item">${iconHtml}<span class="item-label">${label}</span>${detail ? `<small>${detail}</small>` : ""}</div>`;
+}
+function render(){
+ let q=search.value.trim().toLowerCase();
+ let list=names.map((x,i)=>({dex:i+1,name:x[0],en:x[1],type:x[2],drops:drops[i+1]||[]})).filter(p=>
+ (!q||[p.name,p.en,p.type,...p.drops].join(' ').toLowerCase().includes(q))&&
+ (!selectedType||p.type.split(' / ').includes(selectedType))&&
+ (status==='all'||(status==='known'?p.drops.some(d=>d.includes('%')):true))
+ );
+ if(sort.value==='name')list.sort((a,b)=>a.name.localeCompare(b.name,'ko'));
+ document.getElementById('visibleCount').textContent=list.length;
+ document.getElementById('subline').textContent=`${list.length}마리 표시 · ${selectedType||'모든 타입'} · ${status==='known'?'확률 드랍 포함':'전체 데이터'}`;
+ cards.innerHTML='';
+ if(!list.length){cards.innerHTML='<div class="empty">검색 결과가 없어요.<br>검색어 또는 필터를 바꿔보세요.</div>';return}
+ list.forEach(p=>{
+  const c=document.createElement('article');c.className='pokemon';
+  const typeBorderColors={'노말':'#e6e6e6','불꽃':'#f12b2b','물':'#1479ff','전기':'#ffe21a','풀':'#19b84a','얼음':'#22b8d0','격투':'#ff7a1a','독':'#8a2be2','땅':'#8b5a2b','비행':'#8bdcff','에스퍼':'#e60073','벌레':'#a6d900','바위':'#c49a6c','고스트':'#c7a0ff','드래곤':'#203985','강철':'#708b9e','페어리':'#ff8fc8'};
+  const pokemonTypes=p.type.split(' / ');
+  c.style.setProperty('--pokemon-type-border',typeBorderColors[pokemonTypes[0]]||'#315b88');
+  c.style.setProperty('--pokemon-type-border-2',typeBorderColors[pokemonTypes[1]]||typeBorderColors[pokemonTypes[0]]||'#315b88');
+  c.style.borderColor='transparent';
+  const loot=p.drops.length?p.drops.map(itemMarkup).join(''):'<div class="unverified">이 포켓몬의 드랍 정보는 게임 버전에서 추가 확인이 필요합니다.</div>';
+  c.innerHTML=`<div class="poke-top"><div class="spritebox"><img class="sprite" src="https://cdn.jsdelivr.net/gh/PokeAPI/sprites@master/sprites/pokemon/${p.dex}.png" alt="${p.name}" loading="lazy" onerror="this.onerror=null;this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${p.dex}.png'"></div><div><div class="dex">NO. ${String(p.dex).padStart(3,'0')}</div><div class="pname">${p.name}</div><div class="ename">${p.en}</div><span class="typepill">${p.type}</span></div></div><div class="loot"><div class="loot-head"><b>목장 드랍</b><span>${p.drops.some(d=>d.includes('%'))?'확률 드랍':'아이템 드랍'}</span></div>${loot}</div>`;
+  cards.appendChild(c);
+ });
+}
+search.addEventListener('input',render);sort.addEventListener('change',render);render();
+</script>
+
+<style>
+/* Hovering a type in the sidebar previews that type's assigned color. */
+#typeList .type-btn.type-color-hover {
+  background: var(--hover-type-color, var(--panel2)) !important;
+  border-color: var(--hover-type-color, var(--line)) !important;
+  color: var(--hover-type-text, #f8fbff) !important;
+  transition: background-color .12s ease, border-color .12s ease, color .12s ease;
+}
+#typeList .type-btn.type-color-hover span:last-child {
+  color: var(--hover-type-text, #f8fbff) !important;
+}
+</style>
+<script>
+(() => {
+  const typeColors = {
+    '불꽃':['#f12b2b','#ffffff'], '물':['#1479ff','#ffffff'], '풀':['#19b84a','#071522'],
+    '노말':['#e6e6e6','#142033'], '전기':['#ffe21a','#142033'], '격투':['#ff7a1a','#142033'],
+    '독':['#c7a0ff','#24133d'], '땅':['#8b5a2b','#ffffff'], '비행':['#8bdcff','#142033'],
+    '에스퍼':['#e60073','#ffffff'], '벌레':['#a6d900','#142033'], '바위':['#c49a6c','#241b12'],
+    '고스트':['#c7a0ff','#24133d'], '드래곤':['#263d8d','#ffffff'], '강철':['#708b9e','#071522'],
+    '페어리':['#ff8fc8','#40112b'], '얼음':['#22b8d0','#071522']
+  };
+  function attachTypeHover() {
+    document.querySelectorAll('#typeList .type-btn').forEach(button => {
+      const label = button.querySelector('span')?.textContent || '';
+      const type = Object.keys(typeColors).find(name => label.includes(name));
+      if (!type || button.dataset.typeHoverReady) return;
+      button.dataset.typeHoverReady = 'true';
+      button.addEventListener('mouseenter', () => {
+        const [color, text] = typeColors[type];
+        button.style.setProperty('--hover-type-color', color);
+        button.style.setProperty('--hover-type-text', text);
+        button.classList.add('type-color-hover');
+      });
+      button.addEventListener('mouseleave', () => {
+        button.classList.remove('type-color-hover');
+      });
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', attachTypeHover);
+  else attachTypeHover();
+})();
+</script>
+
+
+<style>
+/* Hovering enlarges the card itself while keeping the Pokemon sprite at its normal visual size. */
+.pokemon { position: relative; z-index: 1; transition: transform .18s ease, box-shadow .18s ease !important; }
+.pokemon:hover {
+  transform: scale(1.045) !important;
+  z-index: 5;
+  background: linear-gradient(150deg,#17253a,#101a2a) padding-box,
+              linear-gradient(to bottom right,var(--pokemon-type-border,#315b88) 0 49%,var(--pokemon-type-border-2,var(--pokemon-type-border,#315b88)) 51% 100%) border-box !important;
+  box-shadow: 0 8px 24px #0005 !important;
+}
+.pokemon:hover .sprite { transform: scale(0.9569) !important; }
+</style>
+</body>
+</html>
